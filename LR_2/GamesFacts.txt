@@ -1,0 +1,238 @@
+
+;#####################################################################;
+;#                                                                   #;
+;#     GLOBALS   GLOBALS   GLOBALS   GLOBALS   GLOBALS   GLOBALS     #;
+;#								     #;
+;#####################################################################;
+
+(defglobal ?*LAST_YEAR* = 2018)
+
+
+
+;#####################################################################;
+;#                                                                   #;
+;#      GAMESG    GAMESG    GAMESG   GAMESG    GAMESG    GAMESG      #;
+;#								     #;
+;#####################################################################;
+
+(deffacts	GamesG
+	(GameG Left4Dead 	Shooter Multiplayer 	Horror)
+	(GameG Left4Dead_2 	Shooter Multiplayer 	Horror)
+	(GameG World_of_tanks 	Arcade 	Multiplayer 	Tanks Kartoshka)
+	(GameG AllodsOnline 	RPG 	Multiplyaer 	MMORPG FreeToPlay)
+	(GameG Flatout 		Cars 	Singleplayer 	DESTROY MiniGames)
+	(GameG Flatout_2 	Cars 	Multiplayer 	DESTROOOOOOOY Minigames Girls Rock)
+	(GameG NeedForSpeed 	Cars 	Singleplayer 	Tyning StreetRacing)
+	(GameG Minecraft 	Send 	Multiplayer 	PickAxe Stev Alex Creeper Woolf EnderDragon)
+	(GameG Terraria 2D 	Send 	Multiplayer 	Zombieeee 2D 2D 22222DDDDD)
+	(GameG SuperMeetBoy 	Arcade	Singleplayer 	Trash Arcade TRASH)
+)
+
+
+
+;#####################################################################;
+;#                                                                   #;
+;#    GAMES    GAMES    GAMES    GAMES    GAMES    GAMES    GAMES    #;
+;#								     #;
+;#####################################################################;
+
+(deftemplate Game
+	(multislot Genre
+		(cardinality 1 ?VARIABLE)
+		(type STRING)
+		(default ?NONE))
+	(slot Name
+		(type STRING)
+		(default ?NONE))
+	(slot Manufacturer
+		(type STRING)
+		(default ?NONE))
+	(slot Year
+		(type INTEGER)
+		(range 1950 ?VARIABLE)
+		(default-dynamic ?*LAST_YEAR*))
+	(multislot Platform
+		(type STRING)
+		(default "PC"))
+	(multislot OS
+		(type STRING)
+		(default "NONE"))
+	(slot Duration
+		(type INTEGER)
+		(range 0 ?VARIABLE)
+		(default 0))
+	(multislot GameModes
+		(type SYMBOL)
+		(allowed-symbols singleplayer multiplayer)
+		(default singleplayer))
+	(slot Rating
+		(type NUMBER)
+		(range 0 10)
+		(default 0))
+	(slot Cost
+		(type NUMBER)
+		(range 0 ?VARIABLE)
+		(default 0))
+	(slot Description)
+)
+
+(deffacts	Games
+	(Game 
+		(Name "The Sims") 
+		(Genre "simulator" "strategy") 
+		(Manufacturer "Maxis")
+		(Year 2000)
+		(Platform "PC" "PlayStation 2" "Xbox" "GameCube")
+		(OS "Windows" "Mac OS X" )
+		(Duration 999999)
+		(GameModes singleplayer)
+		(Rating 9)
+		(Cost 5)
+	)
+	(Game 
+		(Name "The Sims 2") 
+		(Genre "simulator" "strategy") 
+		(Manufacturer "Maxis")
+		(Year 2004)
+		(Platform "PC" "Game Boy Advance" "GameCube" "Mac OS X" "Java ME" "Nintendo DS"  "PlayStation 2" "PlayStation Portable" "Xbox")
+		(OS "Windows" "Mac OS X" )
+		(Duration 999999)
+		(GameModes singleplayer)
+		(Rating 9)
+		(Cost 10)
+	)
+	(Game 
+		(Name "The Sims 3") 
+		(Genre "simulator" "strategy") 
+		(Manufacturer "Maxis")
+		(Year 2009)
+		(Platform "PC" "Apple iOS" "Xbox 360" "Wii" "Nintendo DS" "PlayStation 3" "Nintendo 3DS" "Android" "Windows Phone" "Java")
+		(OS "Windows" "Mac OS X")
+		(Duration 999999)
+		(GameModes singleplayer)
+		(Rating 9)
+		(Cost 15)
+	)
+	(Game 
+		(Name "The Sims 4") 
+		(Genre "simulator" "strategy") 
+		(Manufacturer "Maxis")
+		(Year 2014)
+		(Platform "PC" "PlayStation 4" "Xbox One")
+		(OS "Windows" "Mac OS X" )
+		(Duration 999999)
+		(GameModes singleplayer)
+		(Rating 9)
+		(Cost 20)
+	)
+	(Game 
+		(Name "Risen") 
+		(Genre "RPG") 
+		(Manufacturer "Piranha Bytes")
+		(Year 2009)
+		(Platform "PC" "Xbox 360")
+		(OS "Windows")
+		(Duration 40)
+		(GameModes singleplayer)
+		(Rating 9)
+		(Cost 10)
+	)
+	(Game 
+		(Name "Risen 2") 
+		(Genre "RPG") 
+		(Manufacturer "Piranha Bytes")
+		(Year 2012)
+		(Platform "PC" "Xbox 360" "PlayStation 3")
+		(OS "Windows")
+		(Duration 40)
+		(GameModes singleplayer)
+		(Rating 7)
+		(Cost 10)
+	)
+	(Game 
+		(Name "Risen 3") 
+		(Genre "RPG") 
+		(Manufacturer "Piranha Bytes")
+		(Year 2014)
+		(Platform "PC" "Xbox 360" "PlayStation 4")
+		(OS "Windows")
+		(Duration 40)
+		(GameModes singleplayer)
+		(Rating 6)
+		(Cost 15)
+	)
+	(Game 
+		(Name "RAGE") 
+		(Genre "shooter") 
+		(Manufacturer "id Software")
+		(Year 2011)
+		(Platform "PC" "Xbox 360" "PlayStation 3")
+		(OS "Windows" "Mac OS X")
+		(Duration 120)
+		(GameModes singleplayer multiplayer)
+		(Rating 6)
+		(Cost 15)
+	)
+	(Game 
+		(Name "StarCraft") 
+		(Genre "RTS") 
+		(Manufacturer "Blizzard Entertainment")
+		(Year 1998)
+		(Platform "PC" "Nintendo 64")
+		(OS "Windows" "Mac OS X")
+		(Duration 40)
+		(GameModes singleplayer multiplayer)
+		(Rating 9)
+		(Cost 15)
+	)
+	(Game 
+		(Name "StarCraft II: Wings of Liberty")
+		(Genre "RTS") 
+		(Manufacturer "Blizzard Entertainment")
+		(Year 2010)
+		(Platform "PC")
+		(OS "Windows" "Mac OS X")
+		(Duration 50)
+		(GameModes singleplayer multiplayer)
+		(Rating 9)
+		(Cost 30)
+	)
+)
+
+
+
+;#####################################################################;
+;#                                                                   #;
+;#    RULES    RULES    RULES    RULES    RULES    RULES    RULES    #;
+;#								     #;
+;#####################################################################;
+
+(defrule Rule-Show-All-RPG
+	(or 	(GameG ?name $? RPG $?)
+		(Game (Name ?name) (Genre $? "RPG" $?))
+	)
+	=>
+	(printout t "*[RESULT]* RPG game name: " ?name crlf)
+)
+
+(defrule Rule-Show-All-Windows
+	(or 	(GameG ?name $? Windows $?)
+		(Game (Name ?name) (OS $? "Windows" $?))
+	)
+	=>
+	(printout t "*[RESULT]* Game name for OS Windows: " ?name crlf)
+)
+
+(defrule Rule-Show-All-Menshe-2008
+	(or 	(GameG ?name $?year&:(< &?year 2008))
+		(Game (Name ?name) (Year ?year&:(< ?year 2008)))
+	)
+	=>
+	(printout t "*[RESULT]* Game from " ?year " year: " ?name crlf)
+)
+
+(defrule Rule-Show-All-With-Big-Rating
+	(Game (Name ?name) (Rating ?rating&:(>= ?rating 8)))
+	=>
+	(printout t "*[RESULT]* Game with big rating: " ?name " | " ?rating crlf)
+)
