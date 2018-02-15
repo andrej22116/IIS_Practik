@@ -36,6 +36,7 @@ void NumberEditLine::setEvenRule()
 {
     this->setValidator(_evenNumberValidator.get());
     this->setReadOnly(false);
+    this->setEnabled(true);
     this->setText("");
 }
 
@@ -43,6 +44,7 @@ void NumberEditLine::setOddRule()
 {
     this->setValidator(_oddNumberValidator.get());
     this->setReadOnly(false);
+    this->setEnabled(true);
     this->setText("");
 }
 
@@ -50,6 +52,7 @@ void NumberEditLine::setNeutralRule()
 {
     this->setValidator(nullptr);
     this->setReadOnly(true);
+    this->setEnabled(false);
     this->setStyleSheet(neutralStyleSheet);
     this->setText("");
 }

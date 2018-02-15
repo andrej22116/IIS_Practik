@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "gamecontroller.h"
+
 #include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     auto lol = new NumberEditLine(ui->gameField);
     lol->setEvenRule();
+
+    GameController::getInstance().initialization(ui->gameField, ui->statusBar);
 
     updateListOfGames();
 }
