@@ -1,4 +1,4 @@
-
+;(batch GamesFacts.txt)
 ;#####################################################################;
 ;#                                                                   #;
 ;#     GLOBALS   GLOBALS   GLOBALS   GLOBALS   GLOBALS   GLOBALS     #;
@@ -6,29 +6,6 @@
 ;#####################################################################;
 
 (defglobal ?*LAST_YEAR* = 2018)
-
-
-
-;#####################################################################;
-;#                                                                   #;
-;#      GAMESG    GAMESG    GAMESG   GAMESG    GAMESG    GAMESG      #;
-;#								     #;
-;#####################################################################;
-
-(deffacts	GamesG
-	(GameG Left4Dead 	Shooter Multiplayer 	Horror)
-	(GameG Left4Dead_2 	Shooter Multiplayer 	Horror)
-	(GameG World_of_tanks 	Arcade 	Multiplayer 	Tanks Kartoshka)
-	(GameG AllodsOnline 	RPG 	Multiplyaer 	MMORPG FreeToPlay)
-	(GameG Flatout 		Cars 	Singleplayer 	DESTROY MiniGames)
-	(GameG Flatout_2 	Cars 	Multiplayer 	DESTROOOOOOOY Minigames Girls Rock)
-	(GameG NeedForSpeed 	Cars 	Singleplayer 	Tyning StreetRacing)
-	(GameG Minecraft 	Send 	Multiplayer 	PickAxe Stev Alex Creeper Woolf EnderDragon)
-	(GameG Terraria 2D 	Send 	Multiplayer 	Zombieeee 2D 2D 22222DDDDD)
-	(GameG SuperMeetBoy 	Arcade	Singleplayer 	Trash Arcade TRASH)
-)
-
-
 
 ;#####################################################################;
 ;#                                                                   #;
@@ -40,41 +17,133 @@
 	(multislot Genre
 		(cardinality 1 ?VARIABLE)
 		(type STRING)
-		(default ?NONE))
+		(default ?NONE)
+	)
 	(slot Name
 		(type STRING)
-		(default ?NONE))
+		(default ?NONE)
+	)
 	(slot Manufacturer
 		(type STRING)
-		(default ?NONE))
+		(default ?NONE)
+	)
 	(slot Year
 		(type INTEGER)
 		(range 1950 ?VARIABLE)
-		(default-dynamic ?*LAST_YEAR*))
+		(default-dynamic ?*LAST_YEAR*)
+	)
 	(multislot Platform
 		(type STRING)
-		(default "PC"))
+		(default "PC")
+	)
 	(multislot OS
 		(type STRING)
-		(default "NONE"))
+		(default "NONE")
+	)
 	(slot Duration
 		(type INTEGER)
 		(range 0 ?VARIABLE)
-		(default 0))
+		(default 0)
+	)
 	(multislot GameModes
 		(type SYMBOL)
 		(allowed-symbols singleplayer multiplayer)
-		(default singleplayer))
+		(default singleplayer)
+	)
 	(slot Rating
 		(type NUMBER)
 		(range 0 10)
-		(default 0))
+		(default 0)
+	)
 	(slot Cost
 		(type NUMBER)
 		(range 0 ?VARIABLE)
-		(default 0))
+		(default 0)
+	)
 	(slot Description)
 )
+
+(deftemplate Event
+	(slot Eventname
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot GameName
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot Description
+		(type STRING)
+		(default "No diskription")
+	)
+)
+
+(deftemplate GameRoom
+	(slot Name
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot GameName
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot MaxPlayers
+		(type INTEGER)
+		(range 1 ?VARIABLE)
+		(default ?NONE)
+	)
+	(slot Players
+		(type INTEGER)
+		(range 0 ?VARIABLE)
+		(default 0)
+	)
+)
+
+(deftemplate Player
+	(slot Nick
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot Status
+		(type SYMBOL)
+		(allowed-symbols online offline)
+		(default offline)
+	)
+)
+
+(deftemplate PlayerFindGame
+	(slot Nick
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot GameName
+		(type STRING)
+		(default ?NONE)
+	)
+)
+
+(deftemplate PlayerInGame
+	(slot Nick
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot RoomName
+		(type STRING)
+		(default ?NONE)
+	)
+	(slot GameName
+		(type STRING)
+		(default ?NONE)
+	)
+)
+
+
+;#####################################################################;
+;#                                                                   #;
+;#    FACTS    FACTS    FACTS    FACTS    FACTS    FACTS    FACTS    #;
+;#                                                                   #;
+;#####################################################################;
+
 
 (deffacts	Games
 	(Game 
@@ -197,6 +266,35 @@
 		(Rating 9)
 		(Cost 30)
 	)
+
+	
+	(PlayerFindGame
+		(Nick "Jon sina")
+		(GameName "StarCraft")
+	)
+	(PlayerFindGame
+		(Nick "Pisos pro")
+		(GameName "StarCraft")
+	)
+	(PlayerFindGame
+		(Nick "Dinosover")
+		(GameName "StarCraft")
+	)
+	(GameRoom
+		(Name "StarCraft")
+		(GameName "StarCraft")
+		(MaxPlayers 8)
+	)
+	(GameRoom
+		(Name "StarCraft II")
+		(GameName "StarCraft II: Wings of Liberty")
+		(MaxPlayers 8)
+	)
+	;(GameRoom
+	;	(Name "RAGE")
+	;	(GameName "RAGE")
+	;	(MaxPlayers 4)
+	;)
 )
 
 
@@ -204,35 +302,113 @@
 ;#####################################################################;
 ;#                                                                   #;
 ;#    RULES    RULES    RULES    RULES    RULES    RULES    RULES    #;
-;#								     #;
+;#                                                                   #;
 ;#####################################################################;
 
-(defrule Rule-Show-All-RPG
-	(or 	(GameG ?name $? RPG $?)
-		(Game (Name ?name) (Genre $? "RPG" $?))
+(defrule Rule-There're-players-who're-looking-games
+	(exists
+		(PlayerFindGame)
 	)
 	=>
-	(printout t "*[RESULT]* RPG game name: " ?name crlf)
+	(printout t "[INFO]#> Players find games!" crlf)
 )
 
-(defrule Rule-Show-All-Windows
-	(or 	(GameG ?name $? Windows $?)
-		(Game (Name ?name) (OS $? "Windows" $?))
+(defrule Rule-Show-All-RTS-Or-RPG-For-Windows-Or-MacOSX
+	(Game 	(Name ?name) 
+		(Genre $? ?genre&:(= (str-compare ?genre "RPG") 0)|:(= (str-compare ?genre "RTS") 0) $?)
+		(OS $? ?os&:(= (str-compare ?os "Windows") 0)|:(= (str-compare ?os "Mac OS X") 0) $?)
 	)
 	=>
-	(printout t "*[RESULT]* Game name for OS Windows: " ?name crlf)
+	(printout t "*[RESULT]* RPG game name: " ?name " - " ?genre " for " ?os crlf)
 )
 
-(defrule Rule-Show-All-Menshe-2008
-	(or 	(GameG ?name $?year&:(< &?year 2008))
-		(Game (Name ?name) (Year ?year&:(< ?year 2008)))
+(defrule Rule-Show-All-Games-From-Range-2010-2012_2014-LAST_not-short-duration
+	(Game (Name ?name) (Year ?year) (Duration ?time))
+	(test
+		(and
+			(not (< ?time 50))
+			(or
+				(and
+					(>= ?year 2010)
+					(<= ?year 2012)
+				)
+				(and
+					(>= ?year 2014)
+					(<= ?year ?*LAST_YEAR*)
+				)
+			)
+		)
 	)
 	=>
-	(printout t "*[RESULT]* Game from " ?year " year: " ?name crlf)
+	(printout t "[RESULT]#> Game: " ?name ", year: " ?year ", duration: " ?time crlf)
 )
 
-(defrule Rule-Show-All-With-Big-Rating
-	(Game (Name ?name) (Rating ?rating&:(>= ?rating 8)))
+(defrule Rule-Player-Find-Game
+	;(logical 
+	?room <-(GameRoom 
+			(Name ?roomName)
+			(GameName ?gameName) 
+			(MaxPlayers ?maxPlayers)
+			(Players ?players)
+		)
+	;)
+	?find <-(PlayerFindGame 
+		(Nick ?playerNick) 
+		(GameName ?playerFindGame)
+	)
+	(test
+		(and
+			(= (str-compare ?playerFindGame ?gameName) 0)
+			(< ?players ?maxPlayers)
+		)
+	)
 	=>
-	(printout t "*[RESULT]* Game with big rating: " ?name " | " ?rating crlf)
+	(assert 
+		(PlayerInGame 
+			(Nick ?playerNick) 
+			(RoomName ?roomName) 
+			(GameName ?gameName)
+		)
+	)
+	(modify ?room 
+		(Players (+ ?players 1))
+	)
+	(retract ?find)
+	(printout t "[INFO]#> Player \"" ?playerNick "\" join to room: \"" ?roomName "\" for play in: \"" ?gameName "\". Players in room: " (+ ?players 1) "/" ?maxPlayers crlf)
+)
+
+(defrule Rule-Not-All-Multiplayer-Games-Have-Rooms
+	(not 
+		(forall
+			(Game (Name ?gameName) (GameModes $? multiplayer $?))
+			(GameRoom (GameName ?gameName))
+		)
+	)
+	=>
+	(printout t "[![WARNING]!]#> Not all multiplayer games have rooms for play together!" crlf)
+	(assert (NotAllMultiplayerGamesHaveRoomsForPlay))
+)
+
+(defrule Rule-Create-Warnings-For-Players
+	(logical
+		(NotAllMultiplayerGamesHaveRoomsForPlay)	
+	)
+	(Game (Name ?gameName) (GameModes $? multiplayer $?))
+	(not 
+		(GameRoom (GameName ?gameName))
+	)
+	=>
+	(assert (NoGameRoom ?gameName))
+	(printout t "[![WARNING]!]#> Not created room for \"" ?gameName "\"!" crlf)	
+)
+
+(defrule Rule-All-Multiplayer-Games-Have-Rooms
+	?noAllFact <- (NotAllMultiplayerGamesHaveRoomsForPlay)
+	(forall
+		(Game (Name ?gameName) (GameModes $? multiplayer $?))
+		(GameRoom (GameName ?gameName))
+	)
+	=>
+	(printout t "[![WARNING]!]#> All multiplayer games have rooms for play together!" crlf)
+	(retract ?noAllFact)
 )
