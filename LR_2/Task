@@ -1,0 +1,49 @@
+(deftemplate N
+	(slot value
+		(type INTEGER)
+		(range 1 100)
+	)
+)
+(deftemplate K
+	(slot value
+		(type INTEGER)
+		(range 0 9)
+	)
+)
+
+(defrule CalcFactorial
+	?nFact <- (N (value ?n) )
+	?kFact <- (K (value ?k) )	
+	=>
+	(bind ?f 1)
+	(loop-for-count (?i 1 ?n) do
+		(bind ?f (* ?f ?i) )
+	)
+	(printout t "Factorial for number " ?n " --> " ?f crlf)
+	
+	(bind ?number ?f)
+	(bind ?result 0)
+	(while (> ?number 0) do
+		(bind ?ostatok (mod ?number 10) )
+		(bind ?number (div ?number 10) )
+		(if (= ?ostatok ?k) then
+			(bind ?result (+ ?result 1) )
+		)
+	)
+
+	(printout t "Number " ?k " in number " ?f " --> " ?result crlf)
+
+	(retract ?nFact)
+	(retract ?kFact)
+)
+
+
+
+(deffacts Test
+	(N
+		(value 25)
+	)
+	(K
+		(value 7)
+	)
+)
