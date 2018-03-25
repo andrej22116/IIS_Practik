@@ -1,0 +1,29 @@
+(deffunction sayHello ( ?amount ?name )
+	(if (or (not (integerp ?amount)) (<= ?amount 0))
+	then ERROR
+	else
+		(loop-for-count (?i 1 ?amount)
+			(printout t "Hello, " ?name "!" crlf)
+		)
+		OK
+	)
+)
+
+
+(defgeneric to_string)
+
+(defmethod to_string ()
+	""
+)
+(defmethod to_string ( (?var NUMBER) )
+	(str-cat ?var)
+)
+(defmethod to_string ( (?var SYMBOL) )
+	(str-cat ?var)
+)
+(defmethod to_string ( (?var STRING) )
+	(str-cat ?var)
+)
+(defmethod to_string ( ($?var SYMBOL (> (length ?var) 0) ) )
+	(implode$ (create$ ?var))
+)
