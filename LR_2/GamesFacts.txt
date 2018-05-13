@@ -412,3 +412,11 @@
 	(printout t "[![WARNING]!]#> All multiplayer games have rooms for play together!" crlf)
 	(retract ?noAllFact)
 )
+
+(defrule Test
+	(Game (Name ?gameName) (Genre "RPG"))
+	(test
+	)
+	=>
+	(printout t "NO RPG GAME: " ?gameName crlf)
+)

@@ -51,6 +51,11 @@
 		(type NUMBER)
 		(range 0 ?VARIABLE)
 		(default 0))
+	(slot MinimalAge
+		(type INTEGER)
+		(range 0 ?VARIABLE)
+		(default 0))
+	)
 	(slot Description)
 )
 
@@ -334,10 +339,19 @@
 (defrule askAfraidOfBlood "Ask user afraid of blood"
 	(declare (salience 12))
 	=>
-	(if (ask-YesNo "Do yo afraid of blood in games or life?:> ")
-	then
-		(assert (UserAfraidOfBlood TRUE))
-	else
-		(assert (UserAfraidOfBlood FALSE))
-	)
+	(assert (UserAfraidOfBlood (ask-YesNo "Do yo afraid of blood in games or life?:> ")))
+)
+
+(defrule askLikeWomanGames "Ask user like woman games"
+	(UserGender male)
+	(not (UserLikeGenderGames ?))
+	=>
+	(assert (UserLikeGenderGames (ask-YesNo "Do yo like woman games?:> ")))
+)
+
+(defrule askLikeManGames "Ask user like man games"
+	(UserGender female)
+	(not (UserLikeGenderGames ?))
+	=>
+	(assert (UserLikeGenderGames (ask-YesNo "Do yo like man games?:> ")))
 )

@@ -23,13 +23,15 @@ private:
     GameController(const GameController&) = delete;
     GameController operator = (const GameController&) = delete;
 
+    bool setStringWithNumberTo(QString numberStr, int x, int y);
+
     std::array<std::array<std::unique_ptr<NumberEditLine>, 7>, 7> _gameField;
 
     bool isInitialized = false;
 
 public:
     void initialization(QWidget* gameWidget, QStatusBar* statusBar);
-    bool loadGame(QString& fileName);
+    bool loadGame(const QString& fileName);
     void clearField();
 
     static GameController& getInstance();

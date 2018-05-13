@@ -18,13 +18,16 @@ NumberEditLine::NumberEditLine(QWidget* parent) : QLineEdit(parent)
         if (this->isReadOnly()) {
             return;
         }
-        if (this->hasAcceptableInput())
+        bool validNumber = this->hasAcceptableInput();
+        if (isEven())
         {
-            this->setStyleSheet(validStyleSheet);
+            validNumber ? this->setStyleSheet(validEvenStyleSheet)
+                        : this->setStyleSheet(invalidEvenStyleSheet);
         }
-        else
+        else if (isOdd())
         {
-            this->setStyleSheet(invalidStyleSheet);
+            validNumber ? this->setStyleSheet(validOddStyleSheet)
+                        : this->setStyleSheet(invalidOddStyleSheet);
         }
     };
 
@@ -34,25 +37,51 @@ NumberEditLine::NumberEditLine(QWidget* parent) : QLineEdit(parent)
 
 void NumberEditLine::setEvenRule()
 {
+    _isEven = true;
+    _isOdd = false;
+    _isNeutral = false;
     this->setValidator(_evenNumberValidator.get());
     this->setReadOnly(false);
     this->setEnabled(true);
+    this->setStyleSheet(invalidEvenStyleSheet);
     this->setText("");
 }
 
 void NumberEditLine::setOddRule()
 {
+    _isEven = false;
+    _isOdd = true;
+    _isNeutral = false;
     this->setValidator(_oddNumberValidator.get());
     this->setReadOnly(false);
     this->setEnabled(true);
+    this->setStyleSheet(invalidOddStyleSheet);
     this->setText("");
 }
 
 void NumberEditLine::setNeutralRule()
 {
+    _isEven = false;
+    _isOdd = false;
+    _isNeutral = true;
     this->setValidator(nullptr);
     this->setReadOnly(true);
     this->setEnabled(false);
     this->setStyleSheet(neutralStyleSheet);
     this->setText("");
+}
+
+bool NumberEditLine::isEven()
+{
+    return _isEven;
+}
+
+bool NumberEditLine::isOdd()
+{
+    return _isOdd;
+}
+
+bool NumberEditLine::isNeutral()
+{
+    return _isNeutral;
 }

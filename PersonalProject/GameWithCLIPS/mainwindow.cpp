@@ -11,10 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->statusBar->showMessage("Hello!");
 
-    auto lol = new NumberEditLine(ui->gameField);
-    lol->setEvenRule();
-
     GameController::getInstance().initialization(ui->gameField, ui->statusBar);
+    GameController::getInstance().loadGame("./Games/Game_2");
 
     updateListOfGames();
 }
