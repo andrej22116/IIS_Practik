@@ -17,44 +17,64 @@
 (deftemplate Game
 	(multislot Genre
 		(cardinality 1 ?VARIABLE)
-		(type STRING)
-		(default ?NONE))
+		(type SYMBOL)
+		(default ?NONE)
+	)
 	(slot Name
 		(type STRING)
-		(default ?NONE))
+		(default ?NONE)
+	)
 	(slot Manufacturer
 		(type STRING)
-		(default ?NONE))
+		(default ?NONE)
+	)
 	(slot Year
 		(type INTEGER)
 		(range 1950 ?VARIABLE)
-		(default-dynamic ?*LAST_YEAR*))
+		(default-dynamic ?*LAST_YEAR*)
+	)
 	(multislot Platform
-		(type STRING)
-		(default "PC"))
+		(type SYMBOL)
+		(default pc)
+	)
 	(multislot OS
 		(type STRING)
-		(default "NONE"))
+		(default "NONE")
+	)
 	(slot Duration
 		(type INTEGER)
 		(range 0 ?VARIABLE)
-		(default 0))
+		(default 0)
+	)
 	(multislot GameModes
 		(type SYMBOL)
 		(allowed-symbols singleplayer multiplayer)
-		(default singleplayer))
+		(default singleplayer)
+	)
 	(slot Rating
 		(type NUMBER)
 		(range 0 10)
-		(default 0))
+		(default 0)
+	)
 	(slot Cost
 		(type NUMBER)
 		(range 0 ?VARIABLE)
-		(default 0))
+		(default 0)
+	)
 	(slot MinimalAge
 		(type INTEGER)
 		(range 0 ?VARIABLE)
-		(default 0))
+		(default 0)
+	)
+	(slot HasBlood
+		(type SYMBOL)
+		(allowed-symbols TRUE FALSE)
+		(default FALSE)
+	)
+	(slot ForGender
+		(type SYMBOL)
+		(allowed-symbols male female all)
+		(default all)
 	)
 	(slot Description)
 )
@@ -62,10 +82,10 @@
 (deffacts	Games
 	(Game
 		(Name "The Sims")
-		(Genre "simulator" "strategy")
+		(Genre simulator strategy)
 		(Manufacturer "Maxis")
 		(Year 2000)
-		(Platform "PC" "PlayStation 2" "Xbox" "GameCube")
+		(Platform pc ps2 xbox gamecube)
 		(OS "Windows" "Mac OS X" )
 		(Duration 999999)
 		(GameModes singleplayer)
@@ -74,10 +94,10 @@
 	)
 	(Game
 		(Name "The Sims 2")
-		(Genre "simulator" "strategy")
+		(Genre simulator strategy)
 		(Manufacturer "Maxis")
 		(Year 2004)
-		(Platform "PC" "Game Boy Advance" "GameCube" "Mac OS X" "Java ME" "Nintendo DS"  "PlayStation 2" "PlayStation Portable" "Xbox")
+		(Platform pc gameboyadvance gamecube macosx javame nintendods sp2 psp xbox)
 		(OS "Windows" "Mac OS X" )
 		(Duration 999999)
 		(GameModes singleplayer)
@@ -86,10 +106,10 @@
 	)
 	(Game
 		(Name "The Sims 3")
-		(Genre "simulator" "strategy")
+		(Genre simulator strategy)
 		(Manufacturer "Maxis")
 		(Year 2009)
-		(Platform "PC" "Apple iOS" "Xbox 360" "Wii" "Nintendo DS" "PlayStation 3" "Nintendo 3DS" "Android" "Windows Phone" "Java")
+		(Platform pc appleios xbox360 wii nintendods sp3 nintendo3ds android windowsphone java)
 		(OS "Windows" "Mac OS X")
 		(Duration 999999)
 		(GameModes singleplayer)
@@ -98,10 +118,10 @@
 	)
 	(Game
 		(Name "The Sims 4")
-		(Genre "simulator" "strategy")
+		(Genre simulator strategy)
 		(Manufacturer "Maxis")
 		(Year 2014)
-		(Platform "PC" "PlayStation 4" "Xbox One")
+		(Platform pc sp4 xboxone)
 		(OS "Windows" "Mac OS X" )
 		(Duration 999999)
 		(GameModes singleplayer)
@@ -110,10 +130,10 @@
 	)
 	(Game
 		(Name "Risen")
-		(Genre "RPG")
+		(Genre rpg)
 		(Manufacturer "Piranha Bytes")
 		(Year 2009)
-		(Platform "PC" "Xbox 360")
+		(Platform pc xbox360)
 		(OS "Windows")
 		(Duration 40)
 		(GameModes singleplayer)
@@ -122,10 +142,10 @@
 	)
 	(Game
 		(Name "Risen 2")
-		(Genre "RPG")
+		(Genre rpg)
 		(Manufacturer "Piranha Bytes")
 		(Year 2012)
-		(Platform "PC" "Xbox 360" "PlayStation 3")
+		(Platform pc xbox360 sp3)
 		(OS "Windows")
 		(Duration 40)
 		(GameModes singleplayer)
@@ -134,10 +154,10 @@
 	)
 	(Game
 		(Name "Risen 3")
-		(Genre "RPG")
+		(Genre rpg)
 		(Manufacturer "Piranha Bytes")
 		(Year 2014)
-		(Platform "PC" "Xbox 360" "PlayStation 4")
+		(Platform pc xbox360 sp4)
 		(OS "Windows")
 		(Duration 40)
 		(GameModes singleplayer)
@@ -146,10 +166,10 @@
 	)
 	(Game
 		(Name "RAGE")
-		(Genre "shooter")
+		(Genre shooter)
 		(Manufacturer "id Software")
 		(Year 2011)
-		(Platform "PC" "Xbox 360" "PlayStation 3")
+		(Platform pc xbox360 sp3)
 		(OS "Windows" "Mac OS X")
 		(Duration 120)
 		(GameModes singleplayer multiplayer)
@@ -158,10 +178,10 @@
 	)
 	(Game
 		(Name "StarCraft")
-		(Genre "RTS")
+		(Genre strategy)
 		(Manufacturer "Blizzard Entertainment")
 		(Year 1998)
-		(Platform "PC" "Nintendo 64")
+		(Platform pc nintendo64)
 		(OS "Windows" "Mac OS X")
 		(Duration 40)
 		(GameModes singleplayer multiplayer)
@@ -170,10 +190,10 @@
 	)
 	(Game
 		(Name "StarCraft II: Wings of Liberty")
-		(Genre "RTS")
+		(Genre strategy)
 		(Manufacturer "Blizzard Entertainment")
 		(Year 2010)
-		(Platform "PC")
+		(Platform pc)
 		(OS "Windows" "Mac OS X")
 		(Duration 50)
 		(GameModes singleplayer multiplayer)
@@ -256,6 +276,8 @@
     (printout t crlf crlf)
 )
 
+;#### root questions
+
 (defrule askAge "Ask user age!"
 	(declare (salience 14))
 	(not (UserAge ?))
@@ -270,88 +292,223 @@
 	(assert (UserGender (askQuestion "Your gender[male/female]:> " male female)))
 )
 
-(defrule askLikeHorrors "Ask user like Horror games? :3"
-	(UserAge ?age&:(>= ?age 18))
-	(not (UserLike ?))
-	=>
-	(if (ask-YesNo "Do yo like horror games?:> ")
-	then
-		(assert (UserLike Horror))
-	)
-)
-
-(defrule askLikeSendbox "Ask user like sendbox games"
-	(not (UserLike ?))
-	=>
-	(if (ask-YesNo "Do yo like sendbox games?:> ")
-	then
-		(assert (UserLike Sendbox))
-	)
-)
-
-(defrule askLikeFPS "Ask user like fps games"
-	(not (UserLike ?))
-	=>
-	(if (ask-YesNo "Do yo like fps games?:> ")
-	then
-		(assert (UserLike FPS))
-	)
-)
-
-(defrule askLikeStrategy "Ask user like strategy games"
-	(not (UserLike ?))
-	=>
-	(if (ask-YesNo "Do yo like strategy games?:> ")
-	then
-		(assert (UserLike Strategy))
-	)
-)
-
-(defrule askLikeRTS "Ask user like strategy games"
-	(UserLike Strategy)
-	=>
-	(if (ask-YesNo "Do yo like real time strategy games?:> ")
-	then
-		(assert (UserLikeRTS TRUE))
-	else
-		(assert (UserLikeRTS FALSE))
-	)
-)
-
-(defrule askLikeSooters "Ask user like shooter games"
-	(not (UserLike ?))
-	=>
-	(if (ask-YesNo "Do yo like shooter games?:> ")
-	then
-		(assert (UserLike Shooter))
-	)
-)
-
-(defrule askLikeAction "Ask user like action games"
-	(not (UserLike ?))
-	=>
-	(if (ask-YesNo "Do yo like action games?:> ")
-	then
-		(assert (UserLike Action))
-	)
-)
-
 (defrule askAfraidOfBlood "Ask user afraid of blood"
 	(declare (salience 12))
+	(not (UserAfraidOfBlood ?))
 	=>
 	(assert (UserAfraidOfBlood (ask-YesNo "Do yo afraid of blood in games or life?:> ")))
 )
 
-(defrule askLikeWomanGames "Ask user like woman games"
-	(UserGender male)
-	(not (UserLikeGenderGames ?))
+(defrule askPlatform "Ask user platform!"
+	(declare (salience 11))
+	(not (UserPlatform ?))
 	=>
-	(assert (UserLikeGenderGames (ask-YesNo "Do yo like woman games?:> ")))
+	(assert (UserPlatform (askQuestion "Your platform[pc/ps4/ps3/ps2/ps/xbox/xbox360/xboxone]:> " pc ps4 ps3 ps2 ps xbox xbox360 xboxone)))
 )
 
-(defrule askLikeManGames "Ask user like man games"
-	(UserGender female)
-	(not (UserLikeGenderGames ?))
+(defrule askLikeGamesForAll_male
+	(declare (salience 10))
+	(UserGender male)
+	(not (UserLikeGamesForAll ?))
 	=>
-	(assert (UserLikeGenderGames (ask-YesNo "Do yo like man games?:> ")))
+	(assert (UserLikeGamesForAll (ask-YesNo "Do you like games for female?:> ")))
+)
+
+(defrule askLikeGamesForAll_female
+	(declare (salience 10))
+	(UserGender female)
+	(not (UserLikeGamesForAll ?))
+	=>
+	(assert (UserLikeGamesForAll (ask-YesNo "Do you like games for male?:> ")))
+)
+
+(defrule askNeedMultiplayer
+	(declare (salience 9))
+	(not (UserNeedMultiplayer ?))
+	=>
+	(assert (UserNeedMultiplayer (ask-YesNo "Do you need in multiplayer on game?:> ")))
+)
+
+;####### Main asks
+
+(defrule askCalmOrDynamic
+	(not (UserLikeGameSpeed ?))
+	(not (HasResult ?))
+	=>
+	(assert (UserLikeGameSpeed (askQuestion "Do you like calm or dynamic games?[calm/dynamic]:> " calm dynamic)))
+)
+
+(defrule askLikeThink
+	(UserLikeGameSpeed calm)
+	(not (HasResult ?))
+	=>
+	(if (ask-YesNo "Do you like think?:> ")
+	then
+		(assert (HasResult logickal))
+	else
+		(assert (UserNotLikeThink))
+	)
+)
+
+(defrule askLikeWatch
+	(UserNotLikeThink)
+	(not (HasResult ?))
+	=>
+	(if (ask-YesNo "Do you like watch the game a lot off time ?:> ")
+	then
+		(assert (HasResult simulator))
+	else
+		(assert (HeartStone))
+	)
+)
+
+
+(defrule askLikeBeScared
+	(UserLikeGameSpeed dynamic)
+	(not (HasResult ?))
+	=>
+	(if (ask-YesNo "Do you like to be scared?:> ")
+	then
+		(assert (HasResult horror))
+	else
+		(assert (UserNotLikeBeScared))
+	)
+)
+
+(defrule askLikeFights
+	(UserNotLikeBeScared)
+	(not (HasResult ?))
+	=>
+	(assert (UserLikeFights (ask-YesNo "Do you like fights?:> ")))
+)
+
+(defrule askLikeCars
+	(UserLikeFights FALSE)
+	(not (HasResult ?))
+	=>
+	(if (ask-YesNo "Do you like cars?:> ")
+	then
+		(assert (HasResult race))
+	else
+		(assert (UserNotLikeCars))
+	)
+)
+
+(defrule askLikeSport
+	(UserNotLikeCars)
+	(not (HasResult ?))
+	=>
+	(if (ask-YesNo "Do you like sport?:> ")
+	then
+		(assert (HasResult sport))
+	else
+		(assert (HasResult arcade))
+	)
+)
+
+(defrule askFighterOrStrategist
+	(UserLikeFights TRUE)
+	(not (HasResult ?))
+	=>
+	(bind ?select (askQuestion "Do you are fighter or strategist?[fighter/strategist]:> " fighter strategist))
+	(if (eq ?select strategist)
+	then
+		(assert (HasResult strategy))
+	else
+		(assert (UserIsFighter))
+	)
+)
+
+(defrule askLikeGrindAndQuests
+	(UserIsFighter)
+	(not (HasResult ?))
+	=>
+	(if (ask-YesNo "Do you like grind and quests?:> ")
+	then
+		(assert (HasResult rpg))
+	else
+		(assert (HasResult shooter))
+	)
+)
+
+(defrule ShowResult_head
+	(declare (salience 10))
+	(HasResult ?genre)
+	=>
+	(printout t crlf crlf crlf "You can play on the next " ?genre "-s:" crlf)
+)
+
+(defrule ShowResult_AHAHAHAHA
+	(HeartStone)
+	=>
+	(printout t crlf crlf crlf "You can play on the hearth stone, AHAHAHAHAHA" crlf crlf)
+)
+
+(defrule ShowResult_Stupid
+	(declare (salience -100))
+	(not (HasResult ?))
+	=>
+	(printout t crlf crlf crlf "You can walk to your friends (if they are)..." crlf crlf)
+)
+
+(defrule ShowResult
+	(HasResult ?resGenre)
+	(UserAge ?userAge)
+	(UserGender ?userGender)
+	(UserPlatform ?userPlatform)
+	(UserAfraidOfBlood ?userBlood)
+	(UserNeedMultiplayer ?userNeedMultiplayer)
+	(UserLikeGamesForAll ?userLikeGenderGames)
+
+	(Game (Name ?gameName)
+		(Genre $?gameGenres)
+		(Manufacturer ?gameManufacturer)
+		(Year ?gameYear)
+		(OS $?gameOS)
+		(Platform $?gamePlatforms)
+		(GameModes $?gameModes)
+		(Rating ?gameRating)
+		(Cost ?gameCost)
+		(MinimalAge ?gameMinimalAge)
+		(ForGender ?gameForGender)
+		(HasBlood ?gameHasBlood)
+		(Description ?gameDescription)
+	)
+	(test
+		(and
+			(>= ?userAge ?gameMinimalAge)
+			(member ?userPlatform ?gamePlatforms)
+			(member ?resGenre ?gameGenres)
+			(or
+				(and
+					?userNeedMultiplayer
+					(member multiplayer ?gameModes)
+				)
+				(not ?userNeedMultiplayer)
+			)
+			(or
+				(eq ?gameForGender all)
+				(eq ?userGender ?gameForGender)
+				?userLikeGenderGames
+			)
+			(or
+				(and
+					?userBlood
+					(not ?gameHasBlood)
+				)
+				(not ?userBlood)
+			)
+		)
+	)
+	=>
+	(printout t "Game: " ?gameName crlf
+		"          " "Manufacturer: " ?gameManufacturer crlf
+		"          " "Year: " ?gameYear crlf
+		"          " "OS: " ?gameOS crlf
+		"          " "Game modes: " ?gameModes crlf
+		"          " "Rating: " ?gameRating crlf
+		"          " "Cost: " ?gameCost crlf
+		"          " "Description: " ?gameDescription crlf
+		"-------------------------------------------------------------------" crlf
+	)
 )
